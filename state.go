@@ -30,3 +30,11 @@ func (s State) String() string {
 		return fmt.Sprintf("unknown state: %d", s)
 	}
 }
+
+// IsBreakerError 是否触发熔断错误
+func IsBreakerError(err error) bool {
+	if errors.Is(err, ErrStateOpen) || errors.Is(err, ErrStateHalfOpen) {
+		return true
+	}
+	return false
+}
