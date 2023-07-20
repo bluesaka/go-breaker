@@ -1,6 +1,7 @@
 package breaker
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -32,6 +33,7 @@ func TestBreaker(t *testing.T) {
 		WithCoolDownTime(2*time.Second),
 		WithHalfOpenMaxCall(2),
 		WithStrategyOption(strategyFailOpt),
+		WithWebhook(""),
 	)
 
 	for i := 1; i <= 20; i++ {
@@ -46,6 +48,7 @@ func TestBreaker(t *testing.T) {
 		})
 		if errors.Is(err, ErrStateHalfOpen) || errors.Is(err, ErrStateOpen) {
 			log.Printf("err: %s", err.Error())
+			breaker.notify.NotifyMarkdown(context.Background(), "*熔断测试*: 通知1", nil)
 		}
 
 		fmt.Println()
