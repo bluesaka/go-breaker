@@ -48,7 +48,7 @@ func TestBreaker(t *testing.T) {
 		})
 		if errors.Is(err, ErrStateHalfOpen) || errors.Is(err, ErrStateOpen) {
 			log.Printf("err: %s", err.Error())
-			breaker.notify.NotifyMarkdown(context.Background(), "*熔断测试*: 通知1", nil)
+			breaker.Notify.NotifyMarkdown(context.Background(), "*熔断测试*: 通知1", nil)
 		}
 
 		fmt.Println()
