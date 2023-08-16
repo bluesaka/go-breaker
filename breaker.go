@@ -17,7 +17,7 @@ type Breaker struct {
 	coolDownTime    time.Duration  // 冷却时间（从开到半开的时间间隔）
 	metric          Metric         // 指标
 	strategyFn      StrategyFn     // 熔断策略
-	notify          notify.INotify // 消息通知
+	Notify          notify.INotify // 消息通知
 }
 
 const (

@@ -77,6 +77,6 @@ func WithStrategyOption(o StrategyOption) Option {
 // WithWebhook returns a function to set to notify of Breaker
 func WithWebhook(webhook string) Option {
 	return func(options *Breaker) {
-		options.notify = notify.NewNotify(webhook)
+		options.Notify = notify.NewNotify(webhook)
 	}
 }
