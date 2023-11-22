@@ -1,9 +1,10 @@
 package breaker
 
 import (
-	"github.com/bluesaka/go-breaker/notify"
 	"sync"
 	"time"
+
+	"github.com/bluesaka/go-breaker/notify"
 )
 
 // Breaker 熔断器
@@ -30,17 +31,14 @@ const (
 	DefaultMinCall                 = 10          // 默认失败率策略的最小请求数
 )
 
-var defaultBreaker = Breaker{
-	windowInterval:  DefaultWindowInterval,
-	coolDownTime:    DefaultCoolDownTime,
-	halfOpenMaxCall: DefaultHalfOpenMaxCall,
-	strategyFn:      FailStrategyFn(DefaultFailThreshold),
-}
-
 // NewBreaker returns a Breaker object.
 // opts can be used to customize the Breaker.
 func NewBreaker(opts ...Option) *Breaker {
-	breaker := &defaultBreaker
+	breaker := new(Breaker)
+	breaker.windowInterval = DefaultWindowInterval
+	breaker.coolDownTime = DefaultCoolDownTime
+	breaker.halfOpenMaxCall = DefaultHalfOpenMaxCall
+	breaker.strategyFn = FailStrategyFn(DefaultFailThreshold)
 	for _, opt := range opts {
 		opt(breaker)
 	}
@@ -63,7 +61,7 @@ func (b *Breaker) Do(fn func() error) error {
 	defer func() {
 		if err := recover(); err != nil {
 			b.afterCall(batch, false)
-			//panic(err)
+			// panic(err)
 		}
 	}()
 
