@@ -1,6 +1,9 @@
 package breaker
 
-import "time"
+import (
+	"github.com/bluesaka/go-breaker/notify"
+	"time"
+)
 
 type Option func(o *Breaker)
 
@@ -68,5 +71,12 @@ func WithStrategyOption(o StrategyOption) Option {
 		}
 	default:
 		panic("unknown breaker strategy")
+	}
+}
+
+// WithWebhook returns a function to set to notify of Breaker
+func WithWebhook(webhook string) Option {
+	return func(options *Breaker) {
+		options.Notify = notify.NewNotify(webhook)
 	}
 }

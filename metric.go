@@ -1,6 +1,8 @@
 package breaker
 
-import "time"
+import (
+	"time"
+)
 
 // Metric 指标
 type Metric struct {
